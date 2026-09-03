@@ -34,7 +34,7 @@
 
 body {
   margin: 0;
-  padding: 0 20px 60px;
+  padding: 0 20px 32px;
   background: var(--bg);
   color: var(--text);
   font: 13px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
@@ -51,7 +51,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 0 12px;
+  padding: 12px 0 10px;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: saturate(180%) blur(14px);
 }
@@ -76,27 +76,29 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 
 main {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.92fr);
   gap: 16px;
-  align-items: start;
-  max-width: 1080px;
+  /* The drop panel stretches to the settings column, so leftover height becomes
+     drop target rather than dead page. */
+  align-items: stretch;
+  max-width: 960px;
   margin: 0 auto;
 }
 
-@media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+@media (max-width: 880px) { main { grid-template-columns: 1fr; align-items: start; } }
 
 .panel {
   background: var(--panel);
   border: 1px solid var(--panel-edge);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 18px;
+  padding: 16px;
 }
 
 /* --- drop zone --- */
 
 .drop {
-  min-height: 260px;
+  min-height: 168px;
   display: flex;
   border-style: dashed;
   border-width: 1.5px;
@@ -128,9 +130,9 @@ button.primary {
   border-color: transparent;
 }
 button.primary:hover:not(:disabled) { filter: brightness(1.08); }
-button.run { width: 100%; margin-top: 18px; padding: 9px; }
+button.run { width: 100%; margin-top: 14px; padding: 9px; }
 
-.queue { list-style: none; margin: 18px 0 0; padding: 0; text-align: left; }
+.queue { list-style: none; margin: 14px 0 0; padding: 0; text-align: left; }
 
 .queue li {
   display: flex;
@@ -154,11 +156,11 @@ button.run { width: 100%; margin-top: 18px; padding: 9px; }
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  margin: 20px 0 10px;
+  margin: 15px 0 8px;
 }
 .settings h2:first-child { margin-top: 0; }
 
-.field { display: block; margin-bottom: 10px; }
+.field { display: block; margin-bottom: 9px; }
 .field > span { display: flex; justify-content: space-between; margin-bottom: 5px; color: var(--muted); }
 .field em { font-style: normal; color: var(--text); font-variant-numeric: tabular-nums; }
 
@@ -176,12 +178,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .path-row { display: flex; gap: 6px; }
 .path-row input { flex: 1; min-width: 0; }
 
-.check { display: flex; align-items: center; gap: 7px; margin: 7px 0; color: var(--muted); }
+.check { display: flex; align-items: center; gap: 7px; margin: 6px 0; color: var(--muted); }
 .check input { accent-color: var(--accent); }
 
-.hint { margin: -4px 0 12px; font-size: 11.5px; color: var(--muted); }
+.hint { margin: -3px 0 10px; font-size: 11.5px; color: var(--muted); }
 
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
 
 .chip {
   padding: 4px 11px;
@@ -201,7 +203,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 
 /* --- results --- */
 
-.results { max-width: 1080px; margin: 16px auto 0; display: grid; gap: 12px; }
+.results { max-width: 960px; margin: 12px auto 0; display: grid; gap: 12px; }
 .result-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
 .result-name { font-size: 14px; }
 .result-status { margin: 2px 0 0; color: var(--muted); }

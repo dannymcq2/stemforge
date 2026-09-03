@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StemForge</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="titlebar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"></span>
+    <h1>StemForge</h1>
+  </div>
+  <div class="device" id="device-badge"></div>
+</header>
+
+<main>
+  <section class="panel drop" id="drop">
+    <div class="drop-inner">
+      <p class="drop-title">Drop audio here</p>
+      <p class="drop-sub">WAV, AIFF, MP3, M4A, FLAC — or</p>
+      <button class="primary" id="browse">Choose files…</button>
+      <ul class="queue" id="queue"></ul>
+    </div>
+  </section>
+
+  <section class="panel settings">
+    <h2>Separation</h2>
+    <label class="field">
+      <span>Model</span>
+      <select id="model"></select>
+    </label>
+    <p class="hint" id="model-hint"></p>
+
+    <label class="field">
+      <span>Precision <em id="shifts-value">1 pass</em></span>
+      <input type="range" id="shifts" min="1" max="8" step="1" value="1">
+    </label>
+    <p class="hint">More passes average out separation artefacts. Time scales with passes.</p>
+
+    <label class="check"><input type="checkbox" id="residual"> Also write the “everything else” mix</label>
+    <label class="check"><input type="checkbox" id="normalize"> Normalise each stem</label>
+
+    <label class="field">
+      <span>Bit depth</span>
+      <select id="bit-depth">
+        <option value="PCM_24" selected>24-bit WAV</option>
+        <option value="PCM_16">16-bit WAV</option>
+        <option value="FLOAT">32-bit float WAV</option>
+      </select>
+    </label>
+
+    <h2>MIDI</h2>
+    <div class="chips" id="midi-stems"></div>
+    <label class="check"><input type="checkbox" id="drum-midi" checked> Transcribe drums to GM percussion</label>
+
+    <label class="field">
+      <span>Quantise <em id="quantize-value">Off</em></span>
+      <select id="quantize">
+        <option value="0" selected>Off — keep original timing</option>
+        <option value="1">Quarter notes</option>
+        <option value="2">Eighth notes</option>
+        <option value="4">Sixteenth notes</option>
+        <option value="8">Thirty-second notes</option>
+        <option value="3">Eighth triplets</option>
+        <option value="6">Sixteenth triplets</option>
+      </select>
+    </label>
+    <label class="field" id="strength-field" hidden>
+      <span>Strength <em id="strength-value">100%</em></span>
+      <input type="range" id="quantize-strength" min="0" max="100" step="5" value="100">
+    </label>
+
+    <h2>Output</h2>
+    <label class="field">
+      <span>Folder</span>
+      <div class="path-row">
+        <input type="text" id="output" spellcheck="false">
+        <button id="pick-output">…</button>
+      </div>
+    </label>
+
+    <button class="primary run" id="run" disabled>Process</button>
+  </section>
+</main>
+
+<section class="results" id="results"></section>
+
+<template id="result-template">
+  <article class="panel result">
+    <header class="result-head">
+      <div>
+        <h3 class="result-name"></h3>
+        <p class="result-status"></p>
+      </div>
+      <div class="badges"></div>
+    </header>
+    <div class="bar"><div class="bar-fill"></div></div>
+    <div class="result-body" hidden>
+      <div class="tracks"></div>
+      <div class="actions">
+        <button data-action="finder">Reveal in Finder</button>
+        <button data-action="logic" data-what="stems">Stems → Logic Pro</button>
+        <button data-action="logic" data-what="midi">MIDI → Logic Pro</button>
+        <button data-action="garageband" data-what="stems">Stems → GarageBand</button>
+      </div>
+    </div>
+    <p class="error" hidden></p>
+  </article>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

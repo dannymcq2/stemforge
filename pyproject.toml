@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stemforge"
+version = "0.1.0"
+description = "Stem separation, MIDI transcription, and key/BPM detection for macOS"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = { text = "MIT" }
+
+dependencies = [
+    "demucs>=4.0",
+    "basic-pitch[onnx]>=0.4",
+    "torch>=2.1",
+    "librosa>=0.10",
+    "soundfile>=0.12",
+    "pretty_midi>=0.2.10",
+    "numpy>=1.24",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "python-multipart>=0.0.9",
+    # resampy (a basic-pitch dependency) still imports pkg_resources.
+    "setuptools<82",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+stemforge = "stemforge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["stemforge*"]
+
+[tool.setuptools.package-data]
+stemforge = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]
+markers = ["slow: end-to-end runs that load the separation and transcription models"]
+addopts = "-m 'not slow'"
